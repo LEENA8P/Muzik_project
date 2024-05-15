@@ -1,0 +1,41 @@
+mongo db data base used
+altas clod platform of mongo db to store data 
+now we will use mongoose to link our atlas data base on mongodb with our backend 
+mongoose package ko install karna padega 
+model of objects 
+password for data base AA9cH1EWRIwKQlE0
+connect mongo db with node js in index file 
+to not write password directly in code . we use dotenv
+we will make a file .env , we wont upload it on github and 
+store our mongo password there ,
+now we will do authentication part - sign up login part ;
+Intro to authentication - using passport 
+passport - Its a package that ease the authentication process
+pasport jwt - jason web token encrypted way to sending data 
+Jwt se verify kar sakte hai identity 
+download the package  passport and passport jwt 
+inports passport and user model ,
+get code from  documentations in passport.js
+implementing authentication sign up 
+we are now creating a process of defining new user 
+now we will create new folder of routes 
+there we import express
+and router 
+req get data related to request 
+req.body
+if the user with given email already exsist then we return 
+otherwise we create a new user 
+such process are asynchronous thus we use await 
+password are not stored in plain text 
+for security reasons 
+we convert it into a hash 
+one one function 
+maker helpers 
+we generated token in auth and returned in helpers 
+delete password
+now we will modify in this sec 
+now we import auth.js ke routes 
+now we will do testing using a software called postman - this is used to test API
+now we will add login 
+here we compare the hashed form of input password with our saved hashed password to keep the security intact 
+now we will get song . route me ek song.js file banao 
