@@ -2,6 +2,7 @@ const express = require("express");
 const passport = require("passport");
 const router = express.Router();
 const Playlist = require("../models/Playlist");
+const User = require("../models/User");
 const Song = require("../models/Song");
 
 // create a playlist 
@@ -26,19 +27,35 @@ router.post("/create", passport.authenticate("jwt", {session:false}),
 
 );
 
-// get the playlist by id 
-// why colon here 
-router.get("/get/playlist/:playlistId", passport.authenticate("jwt",{session:false}),
-    async (req, res)=>{
-        //this concept is called req. params 
+router.get(
+    "/get/playlist/:playlistId",
+    passport.authenticate("jwt", {session: false}),
+    async (req, res) => {
+        // This concept is called req.params
         const playlistId = req.params.playlistId;
-        const playlist = await Playlist.findOne({_id: playlist});
-        if(!playlist){
-            return res.status(301).json({err: "Invalid  ID"});
-
+        // I need to find a playlist with the _id = playlistId
+        const playlist = await Playlist.findOne({ _id: playlistId }).populate({
+            path: "songs",
+            populate: {
+                path: "artist",
+            },
+        });
+        if (!playlist) {
+            return res.status(301).json({err: "Invalid ID"});
         }
         return res.status(200).json(playlist);
+    }
+);
+router.get(
+    "/get/me",
+    passport.authenticate("jwt", {session: false}),
+    async (req, res) => {
+        const artistId = req.user._id;
 
+        const playlists = await Playlist.find({owner: artistId}).populate(
+            "owner"
+        );
+        return res.status(200).json({data: playlists});
     }
 );
 
@@ -46,7 +63,7 @@ router.get("/get/playlist/:playlistId", passport.authenticate("jwt",{session:fal
 router.get(
     "/get/artist/:artist",
     passport.authenticate("jwt", {session: false}),
-    async (req, res) => {
+    async (req, res) => { 
         const artistId = req.params.artistId ;
         
         const artist = await User.findOne({_id: artistId});
@@ -56,7 +73,7 @@ router.get(
         }
 
         const playlist = await Playlist.find({owner: artistId});
-        return res.status(200).json({data: playlistId});
+        return res.status(200).json({data: playlists});
 
     }
 );
@@ -75,7 +92,7 @@ router.post(
             return res.status(304).json({err: "Playlist doesnt exsist"});
 
         }
-        if(playlist.owner  != currentUser._id && playlist.collaborators.includes(currentUser._id)){
+        if(!playlist.owner.equals(currentUser._id)&& !playlist.collaborators.includes(currentUser._id)){
             return res.status(400).json({err: "Not allowed"});
         }
         // step - check if cuurent user owns the plalist or in collabrators 

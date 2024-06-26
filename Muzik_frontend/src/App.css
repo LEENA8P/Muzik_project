@@ -36,3 +36,21 @@
     transform: rotate(360deg);
   }
 }
+
+/* index.css */
+
+.brygada {
+  font-family: "Brygada 1918", serif;
+  font-optical-sizing: auto;
+  font-weight: 400; /* Replace with desired weight */
+  font-style: normal;
+}
+/* Custom CSS to hide scrollbar */
+.custom-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 0px;  /* Safari and Chrome */
+}

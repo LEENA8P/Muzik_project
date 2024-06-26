@@ -17,16 +17,16 @@ const Playlist = new mongoose.Schema({
     },],
     owner: {
         type: mongoose.Types.ObjectId,
-        ref: "user",
+        ref: "User",
         
     },
     collabrators : {
         type:mongoose.Types.ObjectId,
-        ref: "user",
+        ref: "User",
     },
     
 });
 
 const PlaylistModel = mongoose.model("Playlist", Playlist);
 
-module.export = PlaylistModel;
+module.exports = PlaylistModel;

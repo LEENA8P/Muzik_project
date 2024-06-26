@@ -24,7 +24,7 @@ router.get(
     async (req,res)=>{
         
         //we need to get all songs artist id == currentUser.id
-        const songs = await Song.find({artist: req.user._id});
+        const songs = await Song.find({artist: req.user._id}).populate("artist");
         return res.status(200).json({data: songs});
     }
 );
@@ -35,7 +35,7 @@ router.get("/get/artist/:artistId", passport.authenticate("jwt",{session: false}
  async( req, res )=>{
      const {artistId} = req.params;
      // we can check is artist doesnt exsist 
-     const artist = await User.find({_id: artistId});
+     const artist = await User.findOne({_id: artistId});
      if(!artist){
         return res.status(301).json({err:"Artist doesnt exsist"});
      }
@@ -49,11 +49,11 @@ router.get("/get/artist/:artistId", passport.authenticate("jwt",{session: false}
 router.get(
     "/get/songname/:songName",
      passport.authenticate("jwt",{session : false }),
-     async (req,res)=> {
+     async (req,res)=> { 
         const {songName} = req.params;
         // we can check is artist doesnt exsist 
         // name exact exact hona chaiye .
-        const songs = await Song.find({name: songName});
+        const songs = await Song.find({name: songName}).populate("artist");
         return res.status(200).json({data: songs});
      }
 

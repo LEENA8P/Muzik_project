@@ -33,7 +33,7 @@ router.post("/register", async (req, res)=>{
             username
         };
         const newUser= await User.create(newUserData);
-
+        console.log(newUserData);
         // step 4  we create a token to return to the user 
         const token = await getToken(email, newUser);
         //step 5  return the result to the user 
