@@ -187,9 +187,7 @@ const LoggedInContainer = ({children, curActiveScreen}) => {
                             {currentSong.name}
                          </div>
                         <div className="text-xs hover:underline cursor-pointer" text-gray-500 >
-                        {currentSong.artist.firstName +
-                                    " " +
-                                    currentSong.artist.lastName}
+                        {currentuser.charAt(0).toUpperCase()}
                         </div>
                     </div>
                 </div>
