@@ -13,7 +13,7 @@ const authRoutes = require("./routes/auth");
 const songRoutes = require("./routes/song");
 const playlistRoutes = require("./routes/playlist");
 
-const port = 8000;
+const port = process.env.PORT ||8000;
 const app = express();
 
 app.use(cors());
